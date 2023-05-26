@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login/insertUser.dart';
 import 'login/login.dart';
 
 void main() {
@@ -12,11 +13,12 @@ class MyApp extends StatelessWidget {
       title: 'ButterPopCorn',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.yellow,
       ),
       initialRoute: '/login',
       routes: {
         '/': (context) => LoginScreen(),
+        '/insert': (context) => AddedUser(),
       },
     );
   }

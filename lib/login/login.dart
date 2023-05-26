@@ -135,7 +135,7 @@ class LoginScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const AddedUser()));
+                    MaterialPageRoute(builder: (context) => AddedUser()));
               },
               child: const Text(
                 'Não possui conta? Cadastre-se',
