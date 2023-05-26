@@ -9,11 +9,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Meu App',
+      title: 'ButterPopCorn',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: LoginScreen(),
+      initialRoute: '/login',
+      routes: {
+        '/': (context) => LoginScreen(),
+      },
     );
   }
 }

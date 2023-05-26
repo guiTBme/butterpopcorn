@@ -1,12 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:prova_final/main.dart';
+import 'package:sqflite/sqlite_api.dart';
+import '../scripts/queriessql.dart';
+import 'insertUser.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login() {
+  void _login(BuildContext context) async {
     String email = _emailController.text;
     String password = _passwordController.text;
+    Database db = await DBHelper.database();
+
+    List<Map<String, dynamic>> result = await db.query(
+      'Users',
+      where: 'email = ? AND password = ?',
+      whereArgs: [email, password],
+    );
+
+    if (result.isNotEmpty) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyApp()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erro de login'),
+          content:
+              const Text('Credenciais inválidas. Por favor, tente novamente.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+
+      // Limpar os campos de entrada
+      _emailController.clear();
+      _passwordController.clear();
+    }
   }
 
   @override
@@ -83,12 +123,23 @@ class LoginScreen extends StatelessWidget {
                           side: const BorderSide(
                               color: Colors.yellow, width: 2.0),
                           borderRadius: BorderRadius.circular(16.0))),
-                  onPressed: () => {},
+                  onPressed: () => _login(context),
                   child: const Text(
                     "Entrar",
                     style: TextStyle(color: Colors.yellow),
                   ),
                 ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const AddedUser()));
+              },
+              child: const Text(
+                'Não possui conta? Cadastre-se',
+                style: TextStyle(color: Colors.yellow),
               ),
             ),
           ],
