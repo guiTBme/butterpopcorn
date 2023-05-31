@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
       title: 'ButterPopCorn',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
-      ),
+          brightness: Brightness.dark,
+          primaryColor: const Color.fromRGBO(255, 215, 0, 1)),
       initialRoute: '/login',
       routes: {
         '/': (context) => LoginScreen(),
