@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:prova_final/main.dart';
 import 'package:sqflite/sqlite_api.dart';
+import '../model/home_page.dart';
 import '../scripts/queriessql.dart';
+import 'changePassword.dart';
 import 'insertUser.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   void _login(BuildContext context) async {
-    String email = _emailController.text;
+    String user = _userController.text;
     String password = _passwordController.text;
     Database db = await DBHelper.database();
 
     List<Map<String, dynamic>> result = await db.query(
       'Users',
-      where: 'email = ? AND password = ?',
-      whereArgs: [email, password],
+      where: 'nome = ? AND password = ?',
+      whereArgs: [user, password],
     );
 
     if (result.isNotEmpty) {
       // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyApp()),
+        MaterialPageRoute(builder: (context) => const homeButterPopCorn()),
       );
     } else {
       showDialog(
@@ -42,9 +44,7 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
       );
-
-      // Limpar os campos de entrada
-      _emailController.clear();
+      _userController.clear();
       _passwordController.clear();
     }
   }
@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
               style: const TextStyle(
                 color: Colors.black,
               ),
-              controller: _emailController,
+              controller: _userController,
               decoration: InputDecoration(
                 labelText: 'Usuário',
                 labelStyle: const TextStyle(color: Colors.black, height: 5),
@@ -138,7 +138,6 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
             TextButton(
               onPressed: () {
                 Navigator.push(context,
@@ -146,7 +145,24 @@ class LoginScreen extends StatelessWidget {
               },
               child: const Text(
                 'Não possui conta? Cadastre-se',
-                style: TextStyle(color: Colors.yellow),
+                style: TextStyle(
+                  color: Colors.yellow,
+                  height: 3,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ChangePassword()));
+              },
+              child: const Text(
+                'Esqueci minha senha',
+                style: TextStyle(
+                  color: Colors.yellow,
+                  decoration: TextDecoration.underline,
+                  height: 0.1,
+                ),
               ),
             ),
           ],

@@ -1,44 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:prova_final/persistence/client_model.dart';
 
+import '../persistence/clientUpdate_model.dart';
+import '../persistence/client_model.dart';
 import '../scripts/queriessql.dart';
 
-class AddedUser extends StatelessWidget {
+class ChangePassword extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordControllerVerify =
       TextEditingController();
 
-  void _registerUser(BuildContext context) async {
-    String nome = _nameController.text;
-    String email = _emailController.text;
+  void _updateUser(BuildContext context) async {
+    String name = _nameController.text;
     String password = _passwordController.text;
     String passwordVerify = _passwordControllerVerify.text;
     String photo = "";
 
-    var user = UsersModel(
-      id: 1,
-      nome: nome,
+    var user = UserUpdateModel(
+      nome: name,
       pwd: password,
-      email: email,
       photoProfile: photo,
     );
 
-    await DBHelper.insertUser(user);
+    await DBHelper.updateUser(user);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Registro concluído'),
-        content: const Text('Usuário adicionado com sucesso!'),
+        title: const Text('Atualizar senha'),
+        content: const Text('Senha atualizada com sucesso!'),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               Navigator.pop(context);
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -49,7 +46,6 @@ class AddedUser extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Cadastro'),
         backgroundColor: const Color.fromRGBO(255, 215, 0, 1),
         titleTextStyle: const TextStyle(
           color: Colors.black,
@@ -64,8 +60,6 @@ class AddedUser extends StatelessWidget {
           child: Column(
             children: [
               _buildTextFieldWithLabel('Nome de Usuário', _nameController),
-              const SizedBox(height: 20),
-              _buildTextFieldWithLabel('Email', _emailController),
               const SizedBox(height: 20),
               _buildTextFieldWithLabel(
                 'Senha',
@@ -93,9 +87,9 @@ class AddedUser extends StatelessWidget {
                             side: const BorderSide(
                                 color: Color.fromRGBO(255, 215, 0, 1)),
                             borderRadius: BorderRadius.circular(16.0))),
-                    onPressed: () => _registerUser(context),
+                    onPressed: () => _updateUser(context),
                     child: const Text(
-                      "Efetuar Cadastro",
+                      "Alterar senha",
                       style: TextStyle(color: Color.fromRGBO(255, 215, 0, 1)),
                     ),
                   ),

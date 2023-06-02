@@ -1,13 +1,13 @@
 class UsersModel {
   final int id;
-  final String name;
+  final String nome;
   final String pwd;
   final String email;
   final String photoProfile;
 
   const UsersModel(
       {required this.id,
-      required this.name,
+      required this.nome,
       required this.pwd,
       required this.email,
       required this.photoProfile});
@@ -15,17 +15,15 @@ class UsersModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name': name,
-      'senha': pwd,
+      'nome': nome,
+      'password': pwd,
       'email': email,
-      'photoProfile': photoProfile,
+      'imagem': photoProfile,
     };
   }
 
-  // Implement toString to make it easier to see information about
-  // each dog when using the print statement.
   @override
   String toString() {
-    return 'UsersModel{id: $id, name: $name, senha: $pwd, email: $email, photoPhofile: $photoProfile}';
+    return 'UsersModel{id: $id, name: $nome, senha: $pwd, email: $email, photoPhofile: $photoProfile}';
   }
 }
