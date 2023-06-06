@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
       // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const homeButterPopCorn()),
+        MaterialPageRoute(builder: (context) => const HomeButterPopCorn()),
       );
     } else {
       showDialog(

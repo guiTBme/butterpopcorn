@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:prova_final/model/home_page.dart';
+import 'package:prova_final/model/movies.dart';
+import 'package:prova_final/model/search.dart';
 import 'login/insertUser.dart';
 import 'login/login.dart';
 
@@ -13,12 +16,15 @@ class MyApp extends StatelessWidget {
       title: 'ButterPopCorn',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
           primaryColor: const Color.fromRGBO(255, 215, 0, 1)),
       initialRoute: '/login',
       routes: {
         '/': (context) => LoginScreen(),
         '/insert': (context) => AddedUser(),
+        '/home': (context) => const HomeButterPopCorn(),
+        '/search':(context) => const Search(),
+        '/movies':(context) => const Movies(),
       },
     );
   }
