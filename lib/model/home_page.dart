@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:prova_final/model/profile.dart';
 import 'package:prova_final/model/search.dart';
 
 import 'movies.dart';
@@ -14,16 +13,12 @@ class HomeButterPopCorn extends StatefulWidget {
 
 class _HomeButterPopCornState extends State<HomeButterPopCorn> {
   var _itemSelecionado = 0;
-  final _subtelas = const [Movies(), Search()];
+  final _subtelas = const [Movies(), Search(), Profile()];
 
   void _alterarBottomNav(int idx) {
-    if (idx == 2) {
-      Navigator.pop(context);
-    } else {
-      setState(() {
-        _itemSelecionado = idx;
-      });
-    }
+    setState(() {
+      _itemSelecionado = idx;
+    });
   }
 
   @override
@@ -37,15 +32,23 @@ class _HomeButterPopCornState extends State<HomeButterPopCorn> {
         body: _subtelas[_itemSelecionado],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _itemSelecionado,
-          unselectedLabelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15),
+          unselectedLabelStyle: const TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15),
           selectedItemColor: Colors.black,
-          backgroundColor:const Color.fromRGBO(255, 215, 0, 1),
+          backgroundColor: const Color.fromRGBO(255, 215, 0, 1),
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.movie, color: Colors.black,), label: 'Filmes'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.search, color: Colors.black),
-                label: 'Pesquisar',),
-            BottomNavigationBarItem(icon: Icon(Icons.person, color: Colors.black), label: 'Perfil')
+                icon: Icon(
+                  Icons.movie,
+                  color: Colors.black,
+                ),
+                label: 'Filmes'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search, color: Colors.black),
+              label: 'Pesquisar',
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person, color: Colors.black), label: 'Perfil')
           ],
           selectedLabelStyle: const TextStyle(fontSize: 15),
           onTap: _alterarBottomNav,
