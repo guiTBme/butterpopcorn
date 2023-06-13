@@ -42,7 +42,6 @@ class DBHelper {
     var database = DBHelper.database();
     final db = await database;
 
-    // Update the given Dog.
     await db.update(
       'Users',
       user.toMap(),

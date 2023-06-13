@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prova_final/model/editProfile.dart';
 import 'package:prova_final/model/home_page.dart';
 import 'package:prova_final/model/movies.dart';
 import 'package:prova_final/model/search.dart';
@@ -23,8 +24,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => LoginScreen(),
         '/insert': (context) => AddedUser(),
         '/home': (context) => const HomeButterPopCorn(),
-        '/search':(context) => const Search(),
-        '/movies':(context) => const Movies(),
+        '/search': (context) => const Search(),
+        '/movies': (context) => const Movies(),
+        '/editprofile': (context) => EditProfile(),
       },
     );
   }
