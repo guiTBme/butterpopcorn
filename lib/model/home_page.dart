@@ -5,7 +5,8 @@ import 'package:prova_final/model/search.dart';
 import 'movies.dart';
 
 class HomeButterPopCorn extends StatefulWidget {
-  const HomeButterPopCorn({super.key});
+  final String? user;
+  const HomeButterPopCorn({super.key, this.user});
 
   @override
   State<HomeButterPopCorn> createState() => _HomeButterPopCornState();
@@ -13,7 +14,7 @@ class HomeButterPopCorn extends StatefulWidget {
 
 class _HomeButterPopCornState extends State<HomeButterPopCorn> {
   var _itemSelecionado = 0;
-  final _subtelas = const [Movies(), Search(), Profile()];
+  List<Widget>? _subtelas;
 
   void _alterarBottomNav(int idx) {
     setState(() {
@@ -23,13 +24,15 @@ class _HomeButterPopCornState extends State<HomeButterPopCorn> {
 
   @override
   Widget build(BuildContext context) {
+    _subtelas = [const Movies(), const Search(), Profile(user: widget.user!)];
+
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: _subtelas[_itemSelecionado],
+        body: _subtelas![_itemSelecionado],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _itemSelecionado,
           unselectedLabelStyle: const TextStyle(
@@ -38,17 +41,20 @@ class _HomeButterPopCornState extends State<HomeButterPopCorn> {
           backgroundColor: const Color.fromRGBO(255, 215, 0, 1),
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.movie,
-                  color: Colors.black,
-                ),
-                label: 'Filmes'),
+              icon: Icon(
+                Icons.movie,
+                color: Colors.black,
+              ),
+              label: 'Filmes',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search, color: Colors.black),
               label: 'Pesquisar',
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person, color: Colors.black), label: 'Perfil')
+              icon: Icon(Icons.person, color: Colors.black),
+              label: 'Perfil',
+            )
           ],
           selectedLabelStyle: const TextStyle(fontSize: 15),
           onTap: _alterarBottomNav,

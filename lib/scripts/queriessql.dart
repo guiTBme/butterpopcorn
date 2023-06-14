@@ -60,4 +60,14 @@ class DBHelper {
       whereArgs: [id],
     );
   }
+
+  Future<Map> getTodo(int id) async {
+    var database = DBHelper.database();
+    final db = await database;
+
+    List<Map> maps = await db.query('Users',
+        columns: ['name'], where: 'name = ?', whereArgs: [id]);
+
+    return maps.first;
+  }
 }

@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:prova_final/main.dart';
 import 'package:sqflite/sqlite_api.dart';
 import '../model/home_page.dart';
+import '../model/session.dart';
 import '../scripts/queriessql.dart';
 import 'changePassword.dart';
 import 'insertUser.dart';
@@ -22,10 +25,10 @@ class LoginScreen extends StatelessWidget {
     );
 
     if (result.isNotEmpty) {
-      // ignore: use_build_context_synchronously
+      await SessionManager.login();
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HomeButterPopCorn()),
+        MaterialPageRoute(builder: (context) => HomeButterPopCorn(user: user)),
       );
     } else {
       showDialog(

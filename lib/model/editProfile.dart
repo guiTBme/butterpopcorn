@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../persistence/clientUpdate_model.dart';
 import '../scripts/queriessql.dart';
@@ -7,21 +8,35 @@ class EditProfile extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordControlle = TextEditingController();
+  final String? user;
 
-  EditProfile({super.key});
+  EditProfile({super.key, this.user});
 
   void _updateUser(BuildContext context) async {
     String name = _nameController.text;
     String email = _emailController.text;
     String password = _passwordControlle.text;
 
-    var user = UserUpdateModel(
-      nome: name,
-      email: email,
-      pwd: password,
-    );
+    Database db = await DBHelper.database();
 
-    await DBHelper.updateUser(user);
+    if (user != null) {
+      List<Map<String, dynamic>> result = await db.query(
+        'Users',
+        where: 'nome = ?',
+        whereArgs: [user],
+      );
+
+      if (result.isNotEmpty) {
+        String oldName = result[0]['nome'];
+        String oldEmail = result[0]['email'];
+
+        var userUpdated = UserUpdateModel(
+          nome: name.isNotEmpty ? name : oldName,
+          email: email.isNotEmpty ? email : oldEmail,
+        );
+        await DBHelper.updateUser(userUpdated);
+      }
+    }
 
     showDialog(
       context: context,
@@ -67,7 +82,6 @@ class EditProfile extends StatelessWidget {
               _buildTextFieldWithLabel(
                 'E-mail',
                 _emailController,
-                obscureText: true,
               ),
               const SizedBox(height: 20),
               _buildTextFieldWithLabel(

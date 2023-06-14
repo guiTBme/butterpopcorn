@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:prova_final/model/session.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../login/login.dart';
+import '../scripts/queriessql.dart';
 import 'editProfile.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+  final String? user;
+  const Profile({Key? key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +59,8 @@ class Profile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EditProfile()),
+                                  builder: (context) =>
+                                      EditProfile(user: user!)),
                             );
                           },
                           style: ButtonStyle(
@@ -75,12 +80,13 @@ class Profile extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => LoginScreen()),
                             );
+                            await SessionManager.logout();
                           },
                           style: ButtonStyle(
                             backgroundColor:
