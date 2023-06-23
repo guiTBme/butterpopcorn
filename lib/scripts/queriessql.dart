@@ -50,6 +50,18 @@ class DBHelper {
     );
   }
 
+  static Future<void> updateUserId(UserUpdateModel user, int id ) async {
+    var database = DBHelper.database();
+    final db = await database;
+
+    await db.update(
+      'Users',
+      user.toMap(),
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   static Future<void> deleteUser(int id) async {
     var database = DBHelper.database();
     final db = await database;

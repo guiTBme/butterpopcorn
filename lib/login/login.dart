@@ -30,6 +30,8 @@ class LoginScreen extends StatelessWidget {
         context,
         MaterialPageRoute(builder: (context) => HomeButterPopCorn(user: user)),
       );
+      _userController.clear();
+      _passwordController.clear();
     } else {
       showDialog(
         context: context,

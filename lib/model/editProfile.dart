@@ -7,7 +7,7 @@ import '../scripts/queriessql.dart';
 class EditProfile extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordControlle = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final String? user;
 
   EditProfile({super.key, this.user});
@@ -15,7 +15,7 @@ class EditProfile extends StatelessWidget {
   void _updateUser(BuildContext context) async {
     String name = _nameController.text;
     String email = _emailController.text;
-    String password = _passwordControlle.text;
+    String password = _passwordController.text;
 
     Database db = await DBHelper.database();
 
@@ -26,34 +26,54 @@ class EditProfile extends StatelessWidget {
         whereArgs: [user],
       );
 
-      if (result.isNotEmpty) {
+      if (result.isNotEmpty && result[0]['password'] == password) {
         String oldName = result[0]['nome'];
         String oldEmail = result[0]['email'];
+        String pwd = result[0]['password'];
+        int id = result[0]['id'];
 
         var userUpdated = UserUpdateModel(
           nome: name.isNotEmpty ? name : oldName,
           email: email.isNotEmpty ? email : oldEmail,
+          pwd: pwd,
         );
-        await DBHelper.updateUser(userUpdated);
+        await DBHelper.updateUserId(userUpdated, id);
+
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Lembrete!'),
+            content: const Text('Usuário Atualizado com sucesso!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Atenção!'),
+            content: const Text('As senhas não correspondem'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
       }
     }
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Lembrete!'),
-        content: const Text('Usuário Atualizado com sucesso!'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -86,7 +106,7 @@ class EditProfile extends StatelessWidget {
               const SizedBox(height: 20),
               _buildTextFieldWithLabel(
                 'Senha (atual)',
-                _passwordControlle,
+                _passwordController,
                 obscureText: true,
               ),
               const SizedBox(height: 50),

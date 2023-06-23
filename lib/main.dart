@@ -5,6 +5,7 @@ import 'package:prova_final/model/movies.dart';
 import 'package:prova_final/model/search.dart';
 import 'login/insertUser.dart';
 import 'login/login.dart';
+import 'model/profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeButterPopCorn(),
         '/search': (context) => const Search(),
         '/movies': (context) => const Movies(),
+        '/profile': (context) => Profile(),
         '/editprofile': (context) => EditProfile(),
       },
     );
