@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prova_final/model/profile.dart';
 import 'package:prova_final/model/search.dart';
 
-import 'movies.dart';
+import '../movies/movies.dart';
 
 class HomeButterPopCorn extends StatefulWidget {
   final String? user;

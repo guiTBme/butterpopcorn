@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prova_final/model/editProfile.dart';
 import 'package:prova_final/model/home_page.dart';
-import 'package:prova_final/model/movies.dart';
+import 'package:prova_final/movies/movies.dart';
 import 'package:prova_final/model/search.dart';
 import 'login/insertUser.dart';
 import 'login/login.dart';

@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import 'APIrequests.dart';
-import 'movie_class.dart';
+import '../model/APIrequests.dart';
+import '../model/movie_class.dart';
 
-class Search extends StatelessWidget {
-  const Search({super.key});
+class Movies extends StatelessWidget {
+  const Movies({super.key});
 
   @override
   Widget build(BuildContext context) {
